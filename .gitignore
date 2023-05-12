@@ -35,3 +35,7 @@ out/
 
 ### VS Code ###
 .vscode/
+
+### Temp Scratch Files ###
+_*.kt
+_*.java
