@@ -4,6 +4,6 @@ interface ScraperClient {
 
     fun getProducts(category: String, page: Int = 1): ArrayList<Product>
 
-    fun getProductPriceStatistics(product: Product): PriceStatistics
+    fun getPriceStatistics(product: Product): PriceStatistics
 
 }
