@@ -2,5 +2,10 @@ package com.bsuir.hrm.dataanalyzer.domain
 
 data class Dataset(
     val labels: List<String>,
-    val dataSeries: List<DataSeries>
-)
+    private val dataSeriesList: MutableList<DataSeries> = mutableListOf()
+) {
+
+    fun addDataSeries(vararg dataSeries: DataSeries) {
+        this.dataSeriesList.addAll(dataSeries)
+    }
+}
