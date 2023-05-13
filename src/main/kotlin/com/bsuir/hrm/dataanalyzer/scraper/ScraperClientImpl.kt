@@ -2,6 +2,7 @@ package com.bsuir.hrm.dataanalyzer.scraper
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
@@ -16,17 +17,20 @@ private const val FIRST_DAY_OF_MONTH = 1
 class ScraperClientImpl(
     val restTemplate: RestTemplate,
     val jsonMapper: ObjectMapper,
+    @Value("\${hrm.api.prices.date-pattern}") dateTimePattern: String,
+    @Value("\${hrm.api.products.url}") val productsUrl: String,
+    @Value("\${hrm.api.prices.url}") val pricesUrl: String,
 ) : ScraperClient {
-    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern("yyyy-MM")//FIXME externalize props
+    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(dateTimePattern)
 
     override fun getProducts(category: String, page: Int): ArrayList<Product> {
-        val url = "https://catalog.onliner.by/sdapi/catalog.api/search/${category}?page=${page}&order=price:asc" //FIXME filter without price but remove price sorting
+        val url = "${productsUrl}${category}?page=${page}&order=price:asc"
         val json: JsonNode = getJsonResponse(url)
         return mapProducts(json)
     }
 
     override fun getPriceStatistics(product: Product): PriceStatistics {
-        val url = "https://catalog.api.onliner.by/products/${product.key}/prices-history?period=12m"
+        val url = "${pricesUrl}${product.key}/prices-history?period=12m"
         val json = getJsonResponse(url)
         val prices = mapPrices(json)
         return PriceStatistics(product, prices)
