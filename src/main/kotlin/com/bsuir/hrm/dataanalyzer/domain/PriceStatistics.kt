@@ -1,4 +1,4 @@
-package com.bsuir.hrm.dataanalyzer.scraper
+package com.bsuir.hrm.dataanalyzer.domain
 
 data class PriceStatistics(
     val product: Product,

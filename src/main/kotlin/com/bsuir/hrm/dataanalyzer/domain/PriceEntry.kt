@@ -1,4 +1,4 @@
-package com.bsuir.hrm.dataanalyzer.scraper
+package com.bsuir.hrm.dataanalyzer.domain
 
 import java.time.LocalDate
 

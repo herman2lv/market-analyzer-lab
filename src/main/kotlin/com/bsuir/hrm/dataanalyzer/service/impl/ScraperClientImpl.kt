@@ -1,5 +1,12 @@
-package com.bsuir.hrm.dataanalyzer.scraper
+package com.bsuir.hrm.dataanalyzer.service.impl
 
+import com.bsuir.hrm.dataanalyzer.domain.CategoryPageable
+import com.bsuir.hrm.dataanalyzer.domain.Currency
+import com.bsuir.hrm.dataanalyzer.domain.Money
+import com.bsuir.hrm.dataanalyzer.domain.PriceEntry
+import com.bsuir.hrm.dataanalyzer.domain.PriceStatistics
+import com.bsuir.hrm.dataanalyzer.domain.Product
+import com.bsuir.hrm.dataanalyzer.service.ScraperClient
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.springframework.beans.factory.annotation.Value
@@ -12,7 +19,6 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
 
 private const val FIRST_DAY_OF_MONTH = 1
-
 private const val PRODUCTS_FILTER = "order=price:asc"
 
 @Component

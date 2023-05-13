@@ -1,4 +1,8 @@
-package com.bsuir.hrm.dataanalyzer.scraper
+package com.bsuir.hrm.dataanalyzer.service
+
+import com.bsuir.hrm.dataanalyzer.domain.CategoryPageable
+import com.bsuir.hrm.dataanalyzer.domain.PriceStatistics
+import com.bsuir.hrm.dataanalyzer.domain.Product
 
 interface ScraperClient {
 
