@@ -13,6 +13,8 @@ import java.time.temporal.ChronoField
 
 private const val FIRST_DAY_OF_MONTH = 1
 
+private const val PRODUCTS_FILER = "order=price:asc"
+
 @Component
 class ScraperClientImpl(
     val restTemplate: RestTemplate,
@@ -24,16 +26,22 @@ class ScraperClientImpl(
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(dateTimePattern)
 
     override fun getProducts(category: String, page: Int): ArrayList<Product> {
-        val url = "${productsUrl}${category}?page=${page}&order=price:asc"
+        val url = "$productsUrl$category?page=$page&$PRODUCTS_FILER"
         val json: JsonNode = getJsonResponse(url)
         return mapProducts(json)
     }
 
     override fun getPriceStatistics(product: Product): PriceStatistics {
-        val url = "${pricesUrl}${product.key}/prices-history?period=12m"
+        val url = "$pricesUrl${product.key}/prices-history?period=12m"
         val json = getJsonResponse(url)
         val prices = mapPrices(json)
         return PriceStatistics(product, prices)
+    }
+
+    override fun getNumberOfPages(category: String): Int {
+        val url = "$productsUrl$category?$PRODUCTS_FILER"
+        val json: JsonNode = getJsonResponse(url)
+        return json["page"]["last"].intValue()
     }
 
     private fun getJsonResponse(url: String): JsonNode {
