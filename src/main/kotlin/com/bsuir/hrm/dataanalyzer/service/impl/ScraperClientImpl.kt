@@ -19,7 +19,7 @@ import java.time.format.DateTimeFormatter
 import java.time.temporal.ChronoField
 
 private const val FIRST_DAY_OF_MONTH = 1
-private const val PRODUCTS_FILTER = "order=price:asc"
+private const val PRODUCTS_FILTER = "price%5Bfrom%5D=0.00"
 
 @Component
 class ScraperClientImpl(
