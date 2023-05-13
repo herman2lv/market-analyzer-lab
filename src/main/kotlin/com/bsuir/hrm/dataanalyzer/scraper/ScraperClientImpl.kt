@@ -13,7 +13,7 @@ import java.time.temporal.ChronoField
 
 private const val FIRST_DAY_OF_MONTH = 1
 
-private const val PRODUCTS_FILER = "order=price:asc"
+private const val PRODUCTS_FILTER = "order=price:asc"
 
 @Component
 class ScraperClientImpl(
@@ -26,7 +26,7 @@ class ScraperClientImpl(
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(dateTimePattern)
 
     override fun getProducts(category: String, page: Int): ArrayList<Product> {
-        val url = "$productsUrl$category?page=$page&$PRODUCTS_FILER"
+        val url = "$productsUrl$category?page=$page&$PRODUCTS_FILTER"
         val json: JsonNode = getJsonResponse(url)
         return mapProducts(json)
     }
@@ -39,7 +39,7 @@ class ScraperClientImpl(
     }
 
     override fun getPageable(category: String): CategoryPageable {
-        val url = "$productsUrl$category?$PRODUCTS_FILER"
+        val url = "$productsUrl$category?$PRODUCTS_FILTER"
         val json: JsonNode = getJsonResponse(url)
         return getPageable(json, category)
     }
