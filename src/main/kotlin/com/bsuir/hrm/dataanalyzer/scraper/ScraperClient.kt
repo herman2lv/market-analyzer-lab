@@ -6,5 +6,5 @@ interface ScraperClient {
 
     fun getPriceStatistics(product: Product): PriceStatistics
 
-    fun getNumberOfPages(category: String): Int
+    fun getPageable(category: String): CategoryPageable
 }

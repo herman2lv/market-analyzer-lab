@@ -38,10 +38,17 @@ class ScraperClientImpl(
         return PriceStatistics(product, prices)
     }
 
-    override fun getNumberOfPages(category: String): Int {
+    override fun getPageable(category: String): CategoryPageable {
         val url = "$productsUrl$category?$PRODUCTS_FILER"
         val json: JsonNode = getJsonResponse(url)
-        return json["page"]["last"].intValue()
+        return getPageable(json, category)
+    }
+
+    private fun getPageable(json: JsonNode, category: String): CategoryPageable {
+        val totalProducts = json["total"].intValue()
+        val pageSize = json["page"]["limit"].intValue()
+        val totalPages = json["page"]["last"].intValue()
+        return CategoryPageable(category, totalProducts, pageSize, totalPages)
     }
 
     private fun getJsonResponse(url: String): JsonNode {
