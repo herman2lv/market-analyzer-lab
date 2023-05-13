@@ -58,7 +58,7 @@ class ScraperClientImpl(
 
     private fun mapProducts(json: JsonNode): ArrayList<Product> {
         val products = arrayListOf<Product>()
-        json["products"].onEach {
+        json["products"].forEach {
             products.add(mapProduct(it))
         }
         return products
@@ -76,7 +76,7 @@ class ScraperClientImpl(
     private fun mapPrices(json: JsonNode): ArrayList<PriceEntry> {
         val prices = arrayListOf<PriceEntry>()
         val currency = Currency.valueOf(json["chart_data"]["currency"].asText())
-        json["chart_data"]["items"].onEach loop@{
+        json["chart_data"]["items"].forEach loop@{
             if (it["price"].isNull) {
                 return@loop
             }
