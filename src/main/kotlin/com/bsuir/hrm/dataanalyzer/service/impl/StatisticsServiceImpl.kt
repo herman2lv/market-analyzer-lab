@@ -4,10 +4,14 @@ import com.bsuir.hrm.dataanalyzer.domain.DataSeries
 import com.bsuir.hrm.dataanalyzer.domain.Dataset
 import com.bsuir.hrm.dataanalyzer.domain.Product
 import com.bsuir.hrm.dataanalyzer.service.StatisticsService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.Month
+
+private val log: Logger = LoggerFactory.getLogger(StatisticsServiceImpl::class.java)
 
 @Service
 class StatisticsServiceImpl : StatisticsService {
@@ -42,6 +46,7 @@ class StatisticsServiceImpl : StatisticsService {
         }
         val dataset = Dataset(labels)
         dataset.addDataSeries(seriesRate, seriesAverage)
+        log.debug("Dataset to be returned: {}", dataset)
         return dataset
     }
 

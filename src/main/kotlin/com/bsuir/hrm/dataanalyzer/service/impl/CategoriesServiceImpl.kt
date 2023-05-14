@@ -1,7 +1,11 @@
 package com.bsuir.hrm.dataanalyzer.service.impl
 
 import com.bsuir.hrm.dataanalyzer.service.CategoriesService
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
+
+private val log: Logger = LoggerFactory.getLogger(CategoriesServiceImpl::class.java)
 
 @Service
 class CategoriesServiceImpl : CategoriesService {
@@ -22,6 +26,8 @@ class CategoriesServiceImpl : CategoriesService {
             val content = String(reader.readAllBytes())
             categories = content.split(Regex("\\s+")).filter { it.isNotBlank() }
         }
+        log.info("Read categories list")
+        log.debug("Categories: size={}, content={}", categories.size, categories)
         return categories
     }
 

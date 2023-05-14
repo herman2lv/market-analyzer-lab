@@ -9,6 +9,8 @@ import com.bsuir.hrm.dataanalyzer.domain.ProductDto
 import com.bsuir.hrm.dataanalyzer.service.ScraperClient
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
+import org.slf4j.Logger
+import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpEntity
 import org.springframework.stereotype.Component
@@ -20,6 +22,7 @@ import java.time.temporal.ChronoField
 
 private const val FIRST_DAY_OF_MONTH = 1
 private const val PRODUCTS_FILTER = "price[from]=0.00"
+private val log: Logger = LoggerFactory.getLogger(ScraperClientImpl::class.java)
 
 @Component
 class ScraperClientImpl(
@@ -58,8 +61,11 @@ class ScraperClientImpl(
     }
 
     private fun getJsonResponse(url: String): JsonNode {
+        log.debug("Sending request to: {}", url)
         val httpEntity: HttpEntity<String> = restTemplate.getForEntity(url, String::class.java)
-        return jsonMapper.readTree(httpEntity.body)
+        val json = jsonMapper.readTree(httpEntity.body)
+        log.trace("Received response: {}", json)
+        return json
     }
 
     private fun mapProducts(json: JsonNode): ArrayList<ProductDto> {
