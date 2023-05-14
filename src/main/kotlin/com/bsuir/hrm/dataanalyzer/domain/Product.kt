@@ -14,6 +14,7 @@ data class Product(
     var id: Long,
     var apiKey: String,
     var name: String,
+    var category: String,
     @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name  = "product_id")
     var prices: List<PriceEntry>,
