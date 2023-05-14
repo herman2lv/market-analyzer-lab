@@ -2,7 +2,7 @@ package com.bsuir.hrm.dataanalyzer.service.impl
 
 import com.bsuir.hrm.dataanalyzer.domain.DataSeries
 import com.bsuir.hrm.dataanalyzer.domain.Dataset
-import com.bsuir.hrm.dataanalyzer.domain.PriceStatisticsDto
+import com.bsuir.hrm.dataanalyzer.domain.Product
 import com.bsuir.hrm.dataanalyzer.service.StatisticsService
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
@@ -12,13 +12,13 @@ import java.time.Month
 @Service
 class StatisticsServiceImpl : StatisticsService {
 
-    override fun getInflationRateByMonths(prices: List<PriceStatisticsDto>): Dataset {
+    override fun getInflationRateByMonths(products: List<Product>): Dataset {
         val labels: MutableList<String> = mutableListOf()
         val seriesRate = DataSeries("Inflation Rate")
         val seriesAverage = DataSeries("AveragePrice")
         val monthly: MutableMap<Month, Sum> = mutableMapOf()
-        prices.forEach { priceStat ->
-            priceStat.prices.forEach { priceEntry ->
+        products.forEach { product ->
+            product.prices.forEach { priceEntry ->
                 monthly.merge(priceEntry.date.month, Sum(1, priceEntry.price.amount)) { old, new ->
                     Sum(old.count + new.count, old.amount + new.amount)
                 }
@@ -45,7 +45,7 @@ class StatisticsServiceImpl : StatisticsService {
         return dataset
     }
 
-    override fun getInflationRateForYear(prices: List<PriceStatisticsDto>): BigDecimal {
+    override fun getInflationRateForYear(products: List<Product>): BigDecimal {
         TODO("Not yet implemented")
     }
 
