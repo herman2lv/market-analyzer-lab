@@ -1,10 +1,11 @@
 package com.bsuir.hrm.dataanalyzer.web
 
+import com.fasterxml.jackson.annotation.JsonFormat
 import java.time.LocalDate
-import java.time.Month
 
 data class ChartPropertiesDto(
     val categories: List<String>,
-    val begin: Month = LocalDate.now().minusYears(1).month,
-    val end: Month = LocalDate.now().month,
+    @JsonFormat(pattern = "yyyy-MM-dd")
+    val start: LocalDate = LocalDate.now().minusYears(1),
+    val end: LocalDate = LocalDate.now(),
 )

@@ -9,33 +9,32 @@ import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.time.LocalDate
-import java.time.Month
 
 private val log: Logger = LoggerFactory.getLogger(StatisticsServiceImpl::class.java)
 
 @Service
 class StatisticsServiceImpl : StatisticsService {
 
-    override fun getInflationRateByMonths(products: List<Product>): Dataset {
+    override fun getInflationRateByMonths(products: List<Product>, start: LocalDate, end: LocalDate): Dataset {
         val labels: MutableList<String> = mutableListOf()
         val seriesRate = DataSeries("Inflation Rate")
         val seriesAverage = DataSeries("AveragePrice")
-        val monthly: MutableMap<Month, Sum> = mutableMapOf()
+        val monthly: MutableMap<LocalDate, Sum> = mutableMapOf()
         products.forEach { product ->
             product.prices.forEach { priceEntry ->
-                monthly.merge(priceEntry.date.month, Sum(1, priceEntry.price.amount)) { old, new ->
+                monthly.merge(priceEntry.date.withDayOfMonth(1), Sum(1, priceEntry.price.amount)) { old, new ->
                     Sum(old.count + new.count, old.amount + new.amount)
                 }
             }
         }
-        val endDate = LocalDate.now()
-        var date = endDate.minusYears(1)
-        while (date.isBefore(endDate)) {
-            val monthSum = monthly[date.month] ?: continue
-            val monthAverage = monthSum.amount / monthSum.count.toBigDecimal()
-            labels.add(date.month.toString())
-            seriesAverage.addValue(monthAverage)
+        var date = start.withDayOfMonth(1)
+        while (date.isBefore(end) || date.isEqual(end)) {
+            val key = date.withDayOfMonth(1)
             date = date.plusMonths(1)
+            val monthSum = monthly[key] ?: continue
+            val monthAverage = monthSum.amount / monthSum.count.toBigDecimal()
+            labels.add("${date.month}-${date.year}")
+            seriesAverage.addValue(monthAverage)
         }
 
         var prevAverage = seriesAverage.getValues()[0]

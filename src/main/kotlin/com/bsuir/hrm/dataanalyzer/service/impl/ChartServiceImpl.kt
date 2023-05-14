@@ -22,7 +22,7 @@ class ChartServiceImpl(
         log.debug("Received properties: {}", properties)
         val products = productService.findAllByCategoryIn(properties.categories)
         log.debug("Got products list of size: {}", products.size)
-        return statisticsService.getInflationRateByMonths(products)
+        return statisticsService.getInflationRateByMonths(products, properties.start, properties.end)
     }
 
     override fun getMetaInfo(properties: ChartPropertiesDto): ChartMetaInfoDto {
