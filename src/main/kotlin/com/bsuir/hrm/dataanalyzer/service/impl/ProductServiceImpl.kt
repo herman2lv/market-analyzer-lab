@@ -3,11 +3,14 @@ package com.bsuir.hrm.dataanalyzer.service.impl
 import com.bsuir.hrm.dataanalyzer.data.CacheMetaDataRepository
 import com.bsuir.hrm.dataanalyzer.data.ProductRepository
 import com.bsuir.hrm.dataanalyzer.domain.CacheMetaData
+import com.bsuir.hrm.dataanalyzer.domain.CategoryMetaInfo
 import com.bsuir.hrm.dataanalyzer.domain.PriceEntry
 import com.bsuir.hrm.dataanalyzer.domain.PriceStatisticsDto
 import com.bsuir.hrm.dataanalyzer.domain.Product
 import com.bsuir.hrm.dataanalyzer.service.ProductService
 import com.bsuir.hrm.dataanalyzer.service.ScraperClient
+import com.fasterxml.jackson.databind.JsonNode
+import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
@@ -20,9 +23,12 @@ class ProductServiceImpl(
     val productRepository: ProductRepository,
     val cacheMetaDataRepository: CacheMetaDataRepository,
     val scraperClient: ScraperClient,
+    val jsonMapper: ObjectMapper,
 ) : ProductService {
 
-    override fun findAllByCategoryIn(categories: List<String>): List<Product> {
+    private lateinit var categories: List<CategoryMetaInfo>
+
+    override fun getProductsByCategories(categories: List<String>): List<Product> {
         log.debug("Received categories: {}", categories)
         categories.forEach { category ->
             cacheMetaDataRepository.findById(category)
@@ -34,6 +40,23 @@ class ProductServiceImpl(
                 }, { update(category) })
         }
         return productRepository.findAllByCategoryIn(categories)
+    }
+
+    override fun getCategoriesMetaInfo(): List<CategoryMetaInfo> {
+        if (!this::categories.isInitialized) {
+            categories = getAllInternal()
+        }
+        return categories
+    }
+
+    private fun getAllInternal(): List<CategoryMetaInfo> {
+        val reader = javaClass.getResourceAsStream("/categories.json") ?: throw RuntimeException("Configuration error")
+        reader.use {
+            val json: JsonNode = jsonMapper.readTree(reader.readAllBytes())
+            log.info("Read categories list")
+            log.debug("Categories: size={}, content={}", json.size(), json)
+            return json.map { CategoryMetaInfo(it["key"].asText(), it["display"].asText()) }
+        }
     }
 
     private fun isOld(cache: CacheMetaData) = cache.uploadTime.isBefore(LocalDateTime.now().minusDays(10))

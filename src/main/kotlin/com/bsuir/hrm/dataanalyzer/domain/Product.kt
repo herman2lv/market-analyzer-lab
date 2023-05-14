@@ -16,6 +16,6 @@ data class Product(
     var name: String,
     var category: String,
     @OneToMany(cascade = [CascadeType.ALL])
-    @JoinColumn(name  = "product_id")
+    @JoinColumn(name = "product_id")
     var prices: List<PriceEntry>,
 )

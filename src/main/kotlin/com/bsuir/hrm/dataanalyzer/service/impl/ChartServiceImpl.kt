@@ -20,7 +20,7 @@ class ChartServiceImpl(
 
     override fun getDataset(properties: ChartPropertiesDto): Dataset {
         log.debug("Received properties: {}", properties)
-        val products = productService.findAllByCategoryIn(properties.categories)
+        val products = productService.getProductsByCategories(properties.categories)
         log.debug("Got products list of size: {}", products.size)
         return statisticsService.getInflationRateByMonths(products, properties.start, properties.end)
     }

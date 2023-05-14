@@ -1,6 +1,6 @@
 package com.bsuir.hrm.dataanalyzer.domain
 
-data class Category(
+data class CategoryMetaInfo(
     val key: String,
     val display: String,
 )
