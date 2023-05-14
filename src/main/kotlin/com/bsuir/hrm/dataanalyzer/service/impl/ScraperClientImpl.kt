@@ -1,11 +1,11 @@
 package com.bsuir.hrm.dataanalyzer.service.impl
 
-import com.bsuir.hrm.dataanalyzer.domain.CategoryPageable
-import com.bsuir.hrm.dataanalyzer.domain.Currency
+import com.bsuir.hrm.dataanalyzer.domain.CategoryPageableDto
 import com.bsuir.hrm.dataanalyzer.domain.Money
+import com.bsuir.hrm.dataanalyzer.domain.Money.Currency
 import com.bsuir.hrm.dataanalyzer.domain.PriceEntry
-import com.bsuir.hrm.dataanalyzer.domain.PriceStatistics
-import com.bsuir.hrm.dataanalyzer.domain.Product
+import com.bsuir.hrm.dataanalyzer.domain.PriceStatisticsDto
+import com.bsuir.hrm.dataanalyzer.domain.ProductDto
 import com.bsuir.hrm.dataanalyzer.service.ScraperClient
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
@@ -31,30 +31,30 @@ class ScraperClientImpl(
 ) : ScraperClient {
     val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(dateTimePattern)
 
-    override fun getProducts(category: String, page: Int): ArrayList<Product> {
+    override fun getProducts(category: String, page: Int): ArrayList<ProductDto> {
         val url = "$productsUrl$category?page=$page&$PRODUCTS_FILTER"
         val json: JsonNode = getJsonResponse(url)
         return mapProducts(json)
     }
 
-    override fun getPriceStatistics(product: Product): PriceStatistics {
+    override fun getPriceStatistics(product: ProductDto): PriceStatisticsDto {
         val url = "$pricesUrl${product.key}/prices-history?period=12m"
         val json = getJsonResponse(url)
         val prices = mapPrices(json)
-        return PriceStatistics(product, prices)
+        return PriceStatisticsDto(product, prices)
     }
 
-    override fun getPageable(category: String): CategoryPageable {
+    override fun getPageable(category: String): CategoryPageableDto {
         val url = "$productsUrl$category?$PRODUCTS_FILTER"
         val json: JsonNode = getJsonResponse(url)
         return getPageable(json, category)
     }
 
-    private fun getPageable(json: JsonNode, category: String): CategoryPageable {
+    private fun getPageable(json: JsonNode, category: String): CategoryPageableDto {
         val totalProducts = json["total"].intValue()
         val pageSize = json["page"]["limit"].intValue()
         val totalPages = json["page"]["last"].intValue()
-        return CategoryPageable(category, totalProducts, pageSize, totalPages)
+        return CategoryPageableDto(category, totalProducts, pageSize, totalPages)
     }
 
     private fun getJsonResponse(url: String): JsonNode {
@@ -62,21 +62,21 @@ class ScraperClientImpl(
         return jsonMapper.readTree(httpEntity.body)
     }
 
-    private fun mapProducts(json: JsonNode): ArrayList<Product> {
-        val products = arrayListOf<Product>()
+    private fun mapProducts(json: JsonNode): ArrayList<ProductDto> {
+        val products = arrayListOf<ProductDto>()
         json["products"].forEach {
             products.add(mapProduct(it))
         }
         return products
     }
 
-    private fun mapProduct(it: JsonNode): Product {
+    private fun mapProduct(it: JsonNode): ProductDto {
         val id = it["id"].asLong()
         val key = it["key"].asText()
         val name = it["full_name"].asText()
         val jsonPrice = it["prices"]["price_min"]
         val price = Money(toDecimal(jsonPrice["amount"]), Currency.valueOf(jsonPrice["currency"].asText()))
-        return Product(id, key, name, price)
+        return ProductDto(id, key, name, price)
     }
 
     private fun mapPrices(json: JsonNode): ArrayList<PriceEntry> {
@@ -95,7 +95,7 @@ class ScraperClientImpl(
         val price = Money(toDecimal(it["price"]), currency)
         val parsed = formatter.parse(it["date"].asText())
         val date = LocalDate.of(parsed.get(ChronoField.YEAR), parsed.get(ChronoField.MONTH_OF_YEAR), FIRST_DAY_OF_MONTH)
-        return PriceEntry(date, price)
+        return PriceEntry(date = date, price = price)
     }
 
     private fun toDecimal(node: JsonNode) = BigDecimal.valueOf(node.asDouble())

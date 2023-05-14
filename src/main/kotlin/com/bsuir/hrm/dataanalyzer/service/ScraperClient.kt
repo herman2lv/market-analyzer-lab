@@ -1,14 +1,14 @@
 package com.bsuir.hrm.dataanalyzer.service
 
-import com.bsuir.hrm.dataanalyzer.domain.CategoryPageable
-import com.bsuir.hrm.dataanalyzer.domain.PriceStatistics
-import com.bsuir.hrm.dataanalyzer.domain.Product
+import com.bsuir.hrm.dataanalyzer.domain.CategoryPageableDto
+import com.bsuir.hrm.dataanalyzer.domain.PriceStatisticsDto
+import com.bsuir.hrm.dataanalyzer.domain.ProductDto
 
 interface ScraperClient {
 
-    fun getProducts(category: String, page: Int = 1): ArrayList<Product>
+    fun getProducts(category: String, page: Int = 1): ArrayList<ProductDto>
 
-    fun getPriceStatistics(product: Product): PriceStatistics
+    fun getPriceStatistics(product: ProductDto): PriceStatisticsDto
 
-    fun getPageable(category: String): CategoryPageable
+    fun getPageable(category: String): CategoryPageableDto
 }

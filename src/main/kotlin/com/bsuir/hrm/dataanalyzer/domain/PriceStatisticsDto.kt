@@ -1,6 +1,6 @@
 package com.bsuir.hrm.dataanalyzer.domain
 
-data class PriceStatistics(
-    val product: Product,
+data class PriceStatisticsDto(
+    val product: ProductDto,
     val prices: ArrayList<PriceEntry>,
 )

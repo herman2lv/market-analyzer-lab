@@ -1,6 +1,6 @@
 package com.bsuir.hrm.dataanalyzer.domain
 
-data class CategoryPageable(
+data class CategoryPageableDto(
     val category: String,
     val totalProducts: Int,
     val pageSize: Int,
