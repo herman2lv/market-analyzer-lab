@@ -14,8 +14,8 @@ private val log: Logger = LoggerFactory.getLogger(ChartServiceImpl::class.java)
 
 @Service
 class ChartServiceImpl(
-    val productService: ProductService,
-    val statisticsService: StatisticsService,
+    private val productService: ProductService,
+    private val statisticsService: StatisticsService,
 ) : ChartService {
 
     override fun getDataset(properties: ChartPropertiesDto): Dataset {

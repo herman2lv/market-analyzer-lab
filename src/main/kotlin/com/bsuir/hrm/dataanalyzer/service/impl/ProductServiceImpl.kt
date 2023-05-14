@@ -20,10 +20,10 @@ private val log: Logger = LoggerFactory.getLogger(ProductServiceImpl::class.java
 
 @Service
 class ProductServiceImpl(
-    val productRepository: ProductRepository,
-    val cacheMetaDataRepository: CacheMetaDataRepository,
-    val scraperClient: ScraperClient,
-    val jsonMapper: ObjectMapper,
+    private val productRepository: ProductRepository,
+    private val cacheMetaDataRepository: CacheMetaDataRepository,
+    private val scraperClient: ScraperClient,
+    private val jsonMapper: ObjectMapper,
 ) : ProductService {
 
     private lateinit var categories: List<CategoryMetaInfo>

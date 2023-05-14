@@ -11,10 +11,9 @@ import org.springframework.web.bind.annotation.RestController
 
 @RestController
 class ChartController(
-    val chartService: ChartService,
-    val productService: ProductService,
+    private val chartService: ChartService,
+    private val productService: ProductService,
 ) {
-
 
     @PostMapping("/charts")
     fun chart(@RequestBody props: ChartPropertiesDto): Dataset {

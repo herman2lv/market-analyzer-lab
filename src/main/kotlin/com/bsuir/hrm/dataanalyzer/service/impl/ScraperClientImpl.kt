@@ -26,13 +26,16 @@ private val log: Logger = LoggerFactory.getLogger(ScraperClientImpl::class.java)
 
 @Component
 class ScraperClientImpl(
-    val restTemplate: RestTemplate,
-    val jsonMapper: ObjectMapper,
-    @Value("\${hrm.api.prices.date-pattern}") dateTimePattern: String,
-    @Value("\${hrm.api.products.url}") val productsUrl: String,
-    @Value("\${hrm.api.prices.url}") val pricesUrl: String,
+    private val restTemplate: RestTemplate,
+    private val jsonMapper: ObjectMapper,
+    @Value("\${hrm.api.products.url}")
+    private val productsUrl: String,
+    @Value("\${hrm.api.prices.url}")
+    private val pricesUrl: String,
+    @Value("\${hrm.api.prices.date-pattern}")
+    dateTimePattern: String,
 ) : ScraperClient {
-    val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(dateTimePattern)
+    private val formatter: DateTimeFormatter = DateTimeFormatter.ofPattern(dateTimePattern)
 
     override fun getProducts(category: String, page: Int): ArrayList<ProductDto> {
         val url = "$productsUrl$category?page=$page&$PRODUCTS_FILTER"
