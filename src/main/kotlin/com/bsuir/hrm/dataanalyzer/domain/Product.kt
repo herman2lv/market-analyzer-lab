@@ -1,5 +1,6 @@
 package com.bsuir.hrm.dataanalyzer.domain
 
+import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
@@ -10,10 +11,10 @@ import jakarta.persistence.Table
 @Table(name = "products")
 data class Product(
     @Id
-    val id: Long,
-    val key: String,
-    val name: String,
-    @OneToMany
+    var id: Long,
+    var apiKey: String,
+    var name: String,
+    @OneToMany(cascade = [CascadeType.ALL])
     @JoinColumn(name  = "product_id")
-    val prices: ArrayList<PriceEntry>,
+    var prices: List<PriceEntry>,
 )

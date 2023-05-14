@@ -2,6 +2,8 @@ package com.bsuir.hrm.dataanalyzer.domain
 
 import jakarta.persistence.Embedded
 import jakarta.persistence.Entity
+import jakarta.persistence.GeneratedValue
+import jakarta.persistence.GenerationType.IDENTITY
 import jakarta.persistence.Id
 import jakarta.persistence.Table
 import jakarta.persistence.Temporal
@@ -12,9 +14,10 @@ import java.time.LocalDate
 @Table(name = "price_entries")
 data class PriceEntry(
     @Id
+    @GeneratedValue(strategy = IDENTITY)
     var id: Long? = null,
     @Temporal(DATE)
-    val date: LocalDate,
+    var date: LocalDate,
     @Embedded
-    val price: Money,
+    var price: Money,
 )
