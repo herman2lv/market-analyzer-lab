@@ -3,7 +3,7 @@ package com.bsuir.hrm.dataanalyzer.service.impl
 import com.bsuir.hrm.dataanalyzer.domain.CategoryPageableDto
 import com.bsuir.hrm.dataanalyzer.domain.Money
 import com.bsuir.hrm.dataanalyzer.domain.Money.Currency
-import com.bsuir.hrm.dataanalyzer.domain.PriceEntry
+import com.bsuir.hrm.dataanalyzer.domain.PriceEntryDto
 import com.bsuir.hrm.dataanalyzer.domain.PriceStatisticsDto
 import com.bsuir.hrm.dataanalyzer.domain.ProductDto
 import com.bsuir.hrm.dataanalyzer.service.ScraperClient
@@ -79,8 +79,8 @@ class ScraperClientImpl(
         return ProductDto(id, key, name, price)
     }
 
-    private fun mapPrices(json: JsonNode): ArrayList<PriceEntry> {
-        val prices = arrayListOf<PriceEntry>()
+    private fun mapPrices(json: JsonNode): ArrayList<PriceEntryDto> {
+        val prices = arrayListOf<PriceEntryDto>()
         val currency = Currency.valueOf(json["chart_data"]["currency"].asText())
         json["chart_data"]["items"].forEach loop@{
             if (it["price"].isNull) {
@@ -91,11 +91,11 @@ class ScraperClientImpl(
         return prices
     }
 
-    private fun mapPriceEntry(it: JsonNode, currency: Currency): PriceEntry {
+    private fun mapPriceEntry(it: JsonNode, currency: Currency): PriceEntryDto {
         val price = Money(toDecimal(it["price"]), currency)
         val parsed = formatter.parse(it["date"].asText())
         val date = LocalDate.of(parsed.get(ChronoField.YEAR), parsed.get(ChronoField.MONTH_OF_YEAR), FIRST_DAY_OF_MONTH)
-        return PriceEntry(date = date, price = price)
+        return PriceEntryDto(date = date, price = price)
     }
 
     private fun toDecimal(node: JsonNode) = BigDecimal.valueOf(node.asDouble())
