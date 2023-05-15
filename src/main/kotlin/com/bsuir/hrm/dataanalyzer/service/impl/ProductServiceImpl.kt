@@ -18,6 +18,8 @@ import java.time.LocalDateTime
 
 private val log: Logger = LoggerFactory.getLogger(ProductServiceImpl::class.java)
 
+private const val CACHE_LIVE_DAYS: Long = 10
+
 @Service
 class ProductServiceImpl(
     private val productRepository: ProductRepository,
@@ -59,7 +61,7 @@ class ProductServiceImpl(
         }
     }
 
-    private fun isOld(cache: CacheMetaData) = cache.uploadTime.isBefore(LocalDateTime.now().minusDays(10))
+    private fun isOld(cache: CacheMetaData) = cache.uploadTime.isBefore(LocalDateTime.now().minusDays(CACHE_LIVE_DAYS))
 
     private fun update(category: String) {
         log.debug("Cache metadata is to be updated")
@@ -67,8 +69,7 @@ class ProductServiceImpl(
         val pages = scraperClient.getPageable(category)
         log.debug("To be loaded: category={}, items={}, pages={}", category, pages.totalProducts, pages.totalPages)
         val pricesInfos = mutableListOf<PriceStatisticsDto>()
-        for (page in 1..1) {//FIXME remove after initial testing
-//        for (page in 1..pages.totalPages) {
+        for (page in 1..pages.totalPages) {
             log.debug("Page {} is processing...", page)
             val products = scraperClient.getProducts(category, page)
             products.forEach { product ->
