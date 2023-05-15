@@ -2,6 +2,7 @@ package com.bsuir.hrm.dataanalyzer.domain
 
 import jakarta.persistence.CascadeType
 import jakarta.persistence.Entity
+import jakarta.persistence.FetchType.EAGER
 import jakarta.persistence.Id
 import jakarta.persistence.JoinColumn
 import jakarta.persistence.OneToMany
@@ -15,7 +16,7 @@ data class Product(
     var apiKey: String,
     var name: String,
     var category: String,
-    @OneToMany(cascade = [CascadeType.ALL])
+    @OneToMany(cascade = [CascadeType.ALL], fetch = EAGER)
     @JoinColumn(name = "product_id")
     var prices: List<PriceEntry>,
 )
