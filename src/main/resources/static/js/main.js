@@ -23,13 +23,6 @@ $inputDateEnd.val(dateValue.toISOString().substring(0,10))
 dateValue.setFullYear(dateValue.getFullYear() - 1)
 $inputDateStart.val(dateValue.toISOString().substring(0,10))
 
-function processCategories(categories) {
-  for (const category of categories) {
-    const $elm = $(`<label>${category.display}:<input type="checkbox" name="categories" value="${category.key}"></label>`);
-    $inputContainer.append($elm)
-  }
-}
-
 let toggle = true
 $toggleButton.on('click', (e) => {
   e.preventDefault()
@@ -54,6 +47,13 @@ $chartButton.on('click', (e) => {
   })
 })
 
+function processCategories(categories) {
+  for (const category of categories) {
+    const $elm = $(`<label>${category.display}:<input type="checkbox" name="categories" value="${category.key}"></label>`);
+    $inputContainer.append($elm)
+  }
+}
+
 function createChartProperties() {
   const props = {categories: []}
   $inputContainer.find('input').each(function () {
@@ -69,44 +69,50 @@ function createChartProperties() {
 }
 
 
+function displayInflation(dataset) {
+  const chartBuilderInflation = getChartBuilder($inputInflationType.val())
+  const displayInflation = {
+    height: 330,
+    width: 1200,
+    grid: $inputInflationGrid.prop('checked'),
+    density: 50,
+    colors: ['#027fcc'],
+    tooltip: false,
+    dots: true,
+    dotRadius: 5,
+    trim: false,
+    lineWidth: 2,
+    curveType: $inputInflationRound.prop('checked') ? 'rounded' : 'linear',
+  }
+  chartBuilderInflation.render('chart-inflation', displayInflation, dataset);
+  $chartInflation.append($('<div class="chart-title">Inflation Rate</div>'))
+}
+
+function displayAveragePrice(dataset) {
+  const displayAveragePrice = {
+    height: 330,
+    width: 1200,
+    grid: $inputAveragePriceGrid.prop('checked'),
+    density: 50,
+    colors: ['#2ea42e', '#c73232', '#027fcc', '#faef2d', '#141f9d', '#c830e0', '#2e672e', '#ab4c4c', '#819de8', '#522a4b', '#5e5e5e', '#989139'],
+    tooltip: false,
+    dots: true,
+    dotRadius: 5,
+    trim: $inputAveragePriceTrim.prop('checked'),
+    lineWidth: 2,
+    curveType: $inputAveragePriceRound.prop('checked') ? 'rounded' : 'linear',
+  }
+  const chartBuilderAverage = getChartBuilder($inputAveragePriceType.val())
+  chartBuilderAverage.render('chart-average', displayAveragePrice, dataset);
+  $chartAverage.append($('<div class="chart-title">Average Price</div>'))
+}
+
 function processChartData(dataset, status, $XHR) {
   if ($XHR.status >= 200 && $XHR.status < 300) {
     console.log(dataset)
-    const chartBuilderInflation = getChartBuilder($inputInflationType.val())
-    const displayInflation = {
-      height: 330,
-      width: 1200,
-      grid: $inputInflationGrid.prop('checked'),
-      density: 50,
-      colors: ['#027fcc'],
-      tooltip: false,
-      dots: true,
-      dotRadius: 5,
-      trim: false,
-      lineWidth: 2,
-      curveType: $inputInflationRound.prop('checked') ? 'rounded' : 'linear',
-    }
-    const datasetInflation = {labels: dataset.labels, dataSeriesList: [dataset.dataSeriesList[0]] }
-    const datasetAverage= {labels: dataset.labels, dataSeriesList: [dataset.dataSeriesList[1]] }
+    displayInflation(dataset.inflation);
+    displayAveragePrice(dataset.average);
     $('.chart').removeClass('hidden')
-    chartBuilderInflation.render('chart-inflation', displayInflation, datasetInflation);
-    $chartInflation.append($('<div class="chart-title">Inflation Rate</div>'))
-    const displayAveragePrice = {
-      height: 330,
-      width: 1200,
-      grid: $inputAveragePriceGrid.prop('checked'),
-      density: 50,
-      colors: ['#2ea42e'],
-      tooltip: false,
-      dots: true,
-      dotRadius: 5,
-      trim: $inputAveragePriceTrim.prop('checked'),
-      lineWidth: 2,
-      curveType: $inputAveragePriceRound.prop('checked') ? 'rounded' : 'linear',
-    }
-    const chartBuilderAverage = getChartBuilder($inputAveragePriceType.val())
-    chartBuilderAverage.render('chart-average', displayAveragePrice, datasetAverage);
-    $chartAverage.append($('<div class="chart-title">Average Price</div>'))
   } else {
     console.log('Unexpected status:', $XHR.status)
   }

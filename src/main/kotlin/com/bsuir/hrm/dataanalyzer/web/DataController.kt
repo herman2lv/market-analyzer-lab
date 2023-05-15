@@ -19,7 +19,7 @@ class DataController(
 ) {
 
     @PostMapping("/charts")
-    fun chart(@RequestBody props: ChartPropertiesDto): Dataset {
+    fun chart(@RequestBody props: ChartPropertiesDto): Map<String, Dataset> {
         return chartService.getDataset(props)
     }
 

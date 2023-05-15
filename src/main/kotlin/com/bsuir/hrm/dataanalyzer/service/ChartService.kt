@@ -1,12 +1,10 @@
 package com.bsuir.hrm.dataanalyzer.service
 
-import com.bsuir.hrm.dataanalyzer.service.dto.Dataset
-import com.bsuir.hrm.dataanalyzer.service.dto.ChartMetaInfoDto
 import com.bsuir.hrm.dataanalyzer.service.dto.ChartPropertiesDto
+import com.bsuir.hrm.dataanalyzer.service.dto.Dataset
 
 interface ChartService {
 
-    fun getDataset(properties: ChartPropertiesDto): Dataset
+    fun getDataset(properties: ChartPropertiesDto): Map<String, Dataset>
 
-    fun getMetaInfo(properties: ChartPropertiesDto): ChartMetaInfoDto
 }
