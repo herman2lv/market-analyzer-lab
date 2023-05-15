@@ -76,7 +76,7 @@ class StatisticsServiceImpl : StatisticsService {
             date = date.plusMonths(1)
             val monthSum = sumByMonth[key] ?: continue
             val monthAverage = monthSum.amount / monthSum.count.toBigDecimal()
-            labels?.add("${date.month.toString().substring(0..2)}-${date.year}")
+            labels?.add("${key.month.toString().substring(0..2)}-${key.year}")
             seriesAverage.addValue(monthAverage)
         }
         return seriesAverage
