@@ -59,7 +59,6 @@ spring:
       on-profile: prod
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: postgres
     url: jdbc:postgresql://localhost:5432/tech_market_analyzer
   jpa:
     database: postgresql
