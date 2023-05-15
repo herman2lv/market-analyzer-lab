@@ -7,9 +7,9 @@ const $chartButton = $('.display-chart-button')
 const $inputContainer = $('.input-container')
 const $inputDateStart = $('.input-date-start')
 const $inputDateEnd = $('.input-date-end')
-const $inputInflationType = $('.inflation-rate-type')
-const $inputAveragePriceType = $('.average-price-type')
-const $inputGroupCategories = $('.input-group-categories')
+const $inputInflationType = $('.input-inflation-type')
+const $inputAveragePriceType = $('.input-average-price-type')
+const $inputAverageGroupCategories = $('.input-group-categories')
 const $inputInflationRound = $('.input-inflation-round')
 const $inputInflationGrid = $('.input-inflation-grid')
 const $inputAveragePriceRound = $('.input-average-price-round')
@@ -64,6 +64,7 @@ function createChartProperties() {
   })
   props.start = $inputDateStart.val()
   props.end = $inputDateEnd.val()
+  props.group = $inputAverageGroupCategories.prop('checked')
   return props
 }
 
