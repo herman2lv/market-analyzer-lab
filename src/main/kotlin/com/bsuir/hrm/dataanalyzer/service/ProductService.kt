@@ -1,7 +1,7 @@
 package com.bsuir.hrm.dataanalyzer.service
 
-import com.bsuir.hrm.dataanalyzer.domain.CategoryMetaInfo
-import com.bsuir.hrm.dataanalyzer.domain.Product
+import com.bsuir.hrm.dataanalyzer.data.entity.CategoryMetaInfo
+import com.bsuir.hrm.dataanalyzer.data.entity.Product
 
 interface ProductService {
 

@@ -1,4 +1,4 @@
-package com.bsuir.hrm.dataanalyzer.domain
+package com.bsuir.hrm.dataanalyzer.service.dto
 
 data class Dataset(
     val labels: List<String>

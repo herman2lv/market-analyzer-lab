@@ -1,4 +1,4 @@
-package com.bsuir.hrm.dataanalyzer.web
+package com.bsuir.hrm.dataanalyzer.service.dto
 
 import java.math.BigDecimal
 

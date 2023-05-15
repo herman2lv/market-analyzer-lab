@@ -1,11 +1,11 @@
 package com.bsuir.hrm.dataanalyzer.service.impl
 
-import com.bsuir.hrm.dataanalyzer.domain.CategoryPageableDto
-import com.bsuir.hrm.dataanalyzer.domain.Money
-import com.bsuir.hrm.dataanalyzer.domain.Money.Currency
-import com.bsuir.hrm.dataanalyzer.domain.PriceEntryDto
-import com.bsuir.hrm.dataanalyzer.domain.PriceStatisticsDto
-import com.bsuir.hrm.dataanalyzer.domain.ProductDto
+import com.bsuir.hrm.dataanalyzer.service.dto.scraper.CategoryPageableDto
+import com.bsuir.hrm.dataanalyzer.data.entity.Money
+import com.bsuir.hrm.dataanalyzer.data.entity.Money.Currency
+import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceEntryDto
+import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceStatisticsDto
+import com.bsuir.hrm.dataanalyzer.service.dto.scraper.ProductDto
 import com.bsuir.hrm.dataanalyzer.service.ScraperClient
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper

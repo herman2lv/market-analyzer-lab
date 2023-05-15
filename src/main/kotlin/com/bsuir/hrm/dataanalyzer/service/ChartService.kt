@@ -1,8 +1,8 @@
 package com.bsuir.hrm.dataanalyzer.service
 
-import com.bsuir.hrm.dataanalyzer.domain.Dataset
-import com.bsuir.hrm.dataanalyzer.web.ChartMetaInfoDto
-import com.bsuir.hrm.dataanalyzer.web.ChartPropertiesDto
+import com.bsuir.hrm.dataanalyzer.service.dto.Dataset
+import com.bsuir.hrm.dataanalyzer.service.dto.ChartMetaInfoDto
+import com.bsuir.hrm.dataanalyzer.service.dto.ChartPropertiesDto
 
 interface ChartService {
 

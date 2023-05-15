@@ -2,11 +2,11 @@ package com.bsuir.hrm.dataanalyzer.service.impl
 
 import com.bsuir.hrm.dataanalyzer.data.CacheMetaDataRepository
 import com.bsuir.hrm.dataanalyzer.data.ProductRepository
-import com.bsuir.hrm.dataanalyzer.domain.CacheMetaData
-import com.bsuir.hrm.dataanalyzer.domain.CategoryMetaInfo
-import com.bsuir.hrm.dataanalyzer.domain.PriceEntry
-import com.bsuir.hrm.dataanalyzer.domain.PriceStatisticsDto
-import com.bsuir.hrm.dataanalyzer.domain.Product
+import com.bsuir.hrm.dataanalyzer.data.entity.CacheMetaData
+import com.bsuir.hrm.dataanalyzer.data.entity.CategoryMetaInfo
+import com.bsuir.hrm.dataanalyzer.data.entity.PriceEntry
+import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceStatisticsDto
+import com.bsuir.hrm.dataanalyzer.data.entity.Product
 import com.bsuir.hrm.dataanalyzer.service.ProductService
 import com.bsuir.hrm.dataanalyzer.service.ScraperClient
 import com.fasterxml.jackson.databind.JsonNode

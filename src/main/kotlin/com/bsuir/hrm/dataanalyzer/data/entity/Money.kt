@@ -1,4 +1,4 @@
-package com.bsuir.hrm.dataanalyzer.domain
+package com.bsuir.hrm.dataanalyzer.data.entity
 
 import jakarta.persistence.Embeddable
 import jakarta.persistence.EnumType

@@ -1,4 +1,4 @@
-package com.bsuir.hrm.dataanalyzer.domain
+package com.bsuir.hrm.dataanalyzer.data.entity
 
 import jakarta.persistence.Entity
 import jakarta.persistence.Id

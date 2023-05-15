@@ -1,11 +1,11 @@
 package com.bsuir.hrm.dataanalyzer.service.impl
 
-import com.bsuir.hrm.dataanalyzer.domain.Dataset
+import com.bsuir.hrm.dataanalyzer.service.dto.Dataset
 import com.bsuir.hrm.dataanalyzer.service.ChartService
 import com.bsuir.hrm.dataanalyzer.service.ProductService
 import com.bsuir.hrm.dataanalyzer.service.StatisticsService
-import com.bsuir.hrm.dataanalyzer.web.ChartMetaInfoDto
-import com.bsuir.hrm.dataanalyzer.web.ChartPropertiesDto
+import com.bsuir.hrm.dataanalyzer.service.dto.ChartMetaInfoDto
+import com.bsuir.hrm.dataanalyzer.service.dto.ChartPropertiesDto
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

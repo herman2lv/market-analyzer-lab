@@ -1,8 +1,8 @@
 package com.bsuir.hrm.dataanalyzer.service.impl
 
-import com.bsuir.hrm.dataanalyzer.domain.DataSeries
-import com.bsuir.hrm.dataanalyzer.domain.Dataset
-import com.bsuir.hrm.dataanalyzer.domain.Product
+import com.bsuir.hrm.dataanalyzer.service.dto.DataSeries
+import com.bsuir.hrm.dataanalyzer.service.dto.Dataset
+import com.bsuir.hrm.dataanalyzer.data.entity.Product
 import com.bsuir.hrm.dataanalyzer.service.StatisticsService
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
