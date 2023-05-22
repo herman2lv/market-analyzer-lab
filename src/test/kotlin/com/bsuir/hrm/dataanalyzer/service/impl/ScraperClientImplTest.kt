@@ -50,7 +50,7 @@ internal class ScraperClientImplTest {
         val productsContent = String(Files.readAllBytes(Path.of("src/test/resources/products.json")))
         Mockito.`when`(restTemplate.getForEntity(urlGetProducts, String::class.java)).thenReturn(ResponseEntity(productsContent, HttpStatusCode.valueOf(200)))
 
-        val result: List<ProductDto> = client.getProducts("mobile", page)
+        val result: List<ProductDto> = client.getProducts(category, page)
         println(result)
         assertEquals(30, result.size)
         val expected = ProductDto(3865677, "x9a6128grn", "HONOR X9a 6GB/128GB (изумрудный зеленый)", Money(BigDecimal.valueOf(840.0), BYN))
@@ -78,8 +78,8 @@ internal class ScraperClientImplTest {
         val productsContent = String(Files.readAllBytes(Path.of("src/test/resources/products.json")))
         Mockito.`when`(restTemplate.getForEntity(urlGetPageable, String::class.java)).thenReturn(ResponseEntity(productsContent, HttpStatusCode.valueOf(200)))
 
-        val result: CategoryPageableDto = client.getPageable("mobile")
-        val expected = CategoryPageableDto("mobile", 3438, 30, 115)
+        val result: CategoryPageableDto = client.getPageable(category)
+        val expected = CategoryPageableDto(category, 3438, 30, 115)
         assertEquals(expected, result)
     }
 
