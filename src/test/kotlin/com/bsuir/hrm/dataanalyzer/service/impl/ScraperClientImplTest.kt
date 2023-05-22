@@ -6,10 +6,12 @@ import com.bsuir.hrm.dataanalyzer.service.dto.scraper.CategoryPageableDto
 import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceEntryDto
 import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceStatisticsDto
 import com.bsuir.hrm.dataanalyzer.service.dto.scraper.ProductDto
+import com.fasterxml.jackson.core.JsonParseException
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.junit.jupiter.api.Assertions.*
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
+import org.junit.jupiter.api.assertThrows
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mock
 import org.mockito.Mockito
@@ -58,6 +60,16 @@ internal class ScraperClientImplTest {
     }
 
     @Test
+    fun getProductsNotFound() {
+        val urlGetProducts = "$productsUrl$category?page=$page&$productFilter"
+        Mockito.`when`(restTemplate.getForEntity(urlGetProducts, String::class.java)).thenReturn(ResponseEntity("Not Found", HttpStatusCode.valueOf(404)))
+
+        assertThrows<JsonParseException> {
+            client.getProducts(category, page)
+        }
+    }
+
+    @Test
     fun getPriceStatistics() {
         val urlGetStatistics = "$pricesUrl${productKey}/prices-history?period=12m"
         val productContent = String(Files.readAllBytes(Path.of("src/test/resources/product.json")))
@@ -73,6 +85,17 @@ internal class ScraperClientImplTest {
     }
 
     @Test
+    fun getPriceStatisticsNotFound() {
+        val urlGetStatistics = "$pricesUrl${productKey}/prices-history?period=12m"
+        Mockito.`when`(restTemplate.getForEntity(urlGetStatistics, String::class.java)).thenReturn(ResponseEntity("Not Found", HttpStatusCode.valueOf(404)))
+
+        val toBeInspected = ProductDto(1, productKey, "SomeName", Money(BigDecimal.TEN, BYN))
+        assertThrows<JsonParseException> {
+            client.getPriceStatistics(toBeInspected)
+        }
+    }
+
+    @Test
     fun getPageable() {
         val urlGetPageable = "$productsUrl$category?$productFilter"
         val productsContent = String(Files.readAllBytes(Path.of("src/test/resources/products.json")))
@@ -81,6 +104,16 @@ internal class ScraperClientImplTest {
         val result: CategoryPageableDto = client.getPageable(category)
         val expected = CategoryPageableDto(category, 3438, 30, 115)
         assertEquals(expected, result)
+    }
+
+    @Test
+    fun getPageableNotFound() {
+        val urlGetPageable = "$productsUrl$category?$productFilter"
+        Mockito.`when`(restTemplate.getForEntity(urlGetPageable, String::class.java)).thenReturn(ResponseEntity("Not Found", HttpStatusCode.valueOf(404)))
+
+        assertThrows<JsonParseException> {
+            client.getPageable(category)
+        }
     }
 
 }
