@@ -14,4 +14,4 @@ For profiles `"dev"`/`"prod"` database must be available.
 
 For `"prod"` profile DB connection credentials should be externalized to environment variables
 
-Expected database connection configuration is at [`application.yaml`](/src/main/resources/application.yaml)
+Expected database connection configuration is at [`application.yaml`](/apps/legacy/src/main/resources/application.yaml)
