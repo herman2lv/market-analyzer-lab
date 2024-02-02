@@ -1,0 +1,46 @@
+#spring:
+#  config:
+#    activate:
+#      on-profile: app
+hrm:
+  api:
+    prices:
+      date-pattern: yyyy-MM
+      url: https://catalog.api.onliner.by/products/
+    products:
+      url: https://catalog.onliner.by/sdapi/catalog.api/search/
+logging:
+  level:
+    com:
+      bsuir:
+        hrm: trace
+---
+spring:
+  config:
+    activate:
+      on-profile: test
+logging:
+  level:
+    com:
+      bsuir:
+        hrm: trace
+---
+spring:
+  config:
+    activate:
+      on-profile: dev
+logging:
+  level:
+    com:
+      bsuir:
+        hrm: debug
+---
+spring:
+  config:
+    activate:
+      on-profile: prod
+logging:
+  level:
+    com:
+      bsuir:
+        hrm: warn
