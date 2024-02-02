@@ -14,19 +14,36 @@ class DataLoaderServiceImpl(
     private val scraperClient: ScraperClient
 ) : DataLoaderService {
 
-    override fun getPriceStatistics(category: String): List<PriceDataDto> {
+    override fun getPriceStatistics(category: String, offset: Int, limit: Int): List<PriceDataDto> {
         log.debug("Cache metadata is to be updated")
         val pages = scraperClient.getPageable(category)
+        val offsetPages = offset / pages.pageSize
+        var pageOffset = offset % pages.pageSize
+
         log.debug("To be loaded: category={}, items={}, pages={}", category, pages.totalProducts, pages.totalPages)
         val priceDataList = mutableListOf<PriceDataDto>()
-        for (page in 1..pages.totalPages) {
+        var total = 0
+        for (page in offsetPages + 1..pages.totalPages) {
             log.debug("Page {} is processing...", page)
-            val products = scraperClient.getProducts(category, page)
-            products.forEach { product ->
-                log.trace("Details for item={} is loading...", product)
-                val pricesInfo = scraperClient.getPriceStatistics(product)
-                log.trace("For item {} is loaded {} records", product, pricesInfo.prices.size)
-                priceDataList.add(pricesInfo)
+            var products = scraperClient.getProducts(category, page)
+            if (pageOffset != 0) {
+                products = products.subList(pageOffset, products.size - 1)
+                pageOffset = 0
+            }
+            run processPage@{
+                products.forEach { product ->
+                    if (total == limit) {
+                        return@processPage
+                    }
+                    log.trace("Details for item={} is loading...", product)
+                    val pricesInfo = scraperClient.getPriceStatistics(product)
+                    log.trace("For item {} is loaded {} records", product, pricesInfo.prices.size)
+                    priceDataList.add(pricesInfo)
+                    total++
+                }
+            }
+            if (total == limit) {
+                return priceDataList
             }
         }
         return priceDataList
