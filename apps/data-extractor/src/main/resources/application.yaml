@@ -1,7 +1,6 @@
-#spring:
-#  config:
-#    activate:
-#      on-profile: app
+spring:
+  application:
+    name: data-extractor
 hrm:
   api:
     prices:
