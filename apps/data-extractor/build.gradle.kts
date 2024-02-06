@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 plugins {
     id("org.springframework.boot") version "3.2.3"
@@ -9,6 +10,10 @@ plugins {
 
 group = "com.bsuir.hrm"
 version = "0.0.1-SNAPSHOT"
+
+tasks.named<BootJar>("bootJar") {
+    archiveFileName.set("app.jar")
+}
 
 java {
     sourceCompatibility = JavaVersion.VERSION_17

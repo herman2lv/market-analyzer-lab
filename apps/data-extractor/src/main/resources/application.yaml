@@ -1,6 +1,10 @@
 spring:
   application:
     name: data-extractor
+eureka:
+  client:
+    service-url:
+      defaultZone: http://service-discovery:8761/eureka
 hrm:
   api:
     prices:
