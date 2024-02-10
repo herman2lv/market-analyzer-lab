@@ -16,3 +16,13 @@ services:
     depends_on:
       - service-discovery
     restart: always
+
+  service-product:
+    build: apps/service-product
+    image: bsuir-hrm-dataanlyzer-service-product
+    ports:
+      - "8081:8080"
+    depends_on:
+      - service-discovery
+      - data-extractor
+    restart: always
