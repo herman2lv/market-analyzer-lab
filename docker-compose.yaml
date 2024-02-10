@@ -35,3 +35,16 @@ services:
       - service-discovery
       - data-extractor
     restart: always
+
+  service-processing:
+    build: apps/service-processing
+    image: bsuir-hrm-dataanlyzer-service-processing
+    ports:
+      - "8082:8080"
+      - "5555"
+    environment:
+      - JAVA_TOOL_OPTIONS=${DEBUG_OPTIONS}
+    depends_on:
+      - service-discovery
+      - service-product
+    restart: always
