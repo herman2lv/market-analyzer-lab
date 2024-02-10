@@ -6,6 +6,9 @@ services:
     image: bsuir-hrm-dataanlyzer-service-discovery
     ports:
       - "8761:8761"
+      - "5555"
+    environment:
+      - JAVA_TOOL_OPTIONS=${DEBUG_OPTIONS}
     restart: always
 
   data-extractor:
@@ -13,6 +16,9 @@ services:
     image: bsuir-hrm-dataanlyzer-data-extractor
     ports:
       - "8080:8080"
+      - "5555"
+    environment:
+      - JAVA_TOOL_OPTIONS=${DEBUG_OPTIONS}
     depends_on:
       - service-discovery
     restart: always
@@ -22,6 +28,9 @@ services:
     image: bsuir-hrm-dataanlyzer-service-product
     ports:
       - "8081:8080"
+      - "5555"
+    environment:
+      - JAVA_TOOL_OPTIONS=${DEBUG_OPTIONS}
     depends_on:
       - service-discovery
       - data-extractor
