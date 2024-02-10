@@ -1,12 +1,12 @@
 package com.bsuir.hrm.dataanalyzer.service.impl
 
 import com.bsuir.hrm.dataanalyzer.service.ScraperClient
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.CategoryPageableDto
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.MoneyDto
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.MoneyDto.Currency
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceEntryDto
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceDataDto
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.ProductDto
+import com.bsuir.hrm.dataanalyzer.service.dto.CategoryPageableDto
+import com.bsuir.hrm.dataanalyzer.service.dto.MoneyDto
+import com.bsuir.hrm.dataanalyzer.service.dto.MoneyDto.Currency
+import com.bsuir.hrm.dataanalyzer.service.dto.PriceEntryDto
+import com.bsuir.hrm.dataanalyzer.service.dto.PriceDataDto
+import com.bsuir.hrm.dataanalyzer.service.dto.ProductDto
 import com.fasterxml.jackson.databind.JsonNode
 import com.fasterxml.jackson.databind.ObjectMapper
 import org.slf4j.Logger
@@ -67,7 +67,7 @@ class ScraperClientImpl(
         log.debug("Sending request to: {}", url)
         val httpEntity: HttpEntity<String> = restTemplate.getForEntity(url, String::class.java)
         val json = jsonMapper.readTree(httpEntity.body)
-        log.trace("Received response: {}", json)
+        log.trace("Received response of size: {} nodes", json.size())
         return json
     }
 

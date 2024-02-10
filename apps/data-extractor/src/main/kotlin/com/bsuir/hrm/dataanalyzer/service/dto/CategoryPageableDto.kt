@@ -1,4 +1,4 @@
-package com.bsuir.hrm.dataanalyzer.service.dto.scraper
+package com.bsuir.hrm.dataanalyzer.service.dto
 
 data class CategoryPageableDto(
     val category: String,

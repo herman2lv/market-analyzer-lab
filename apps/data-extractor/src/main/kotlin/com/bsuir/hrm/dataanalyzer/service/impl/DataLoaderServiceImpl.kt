@@ -2,7 +2,7 @@ package com.bsuir.hrm.dataanalyzer.service.impl
 
 import com.bsuir.hrm.dataanalyzer.service.DataLoaderService
 import com.bsuir.hrm.dataanalyzer.service.ScraperClient
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceDataDto
+import com.bsuir.hrm.dataanalyzer.service.dto.PriceDataDto
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service

@@ -1,8 +1,8 @@
 package com.bsuir.hrm.dataanalyzer.service
 
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.CategoryPageableDto
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.PriceDataDto
-import com.bsuir.hrm.dataanalyzer.service.dto.scraper.ProductDto
+import com.bsuir.hrm.dataanalyzer.service.dto.CategoryPageableDto
+import com.bsuir.hrm.dataanalyzer.service.dto.PriceDataDto
+import com.bsuir.hrm.dataanalyzer.service.dto.ProductDto
 
 interface ScraperClient {
 
