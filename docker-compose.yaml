@@ -1,0 +1,18 @@
+version: "3.8"
+services:
+
+  service-discovery:
+    build: apps/service-discovery
+    image: bsuir-hrm-dataanlyzer-service-discovery
+    ports:
+      - "8761:8761"
+    restart: always
+
+  data-extractor:
+    build: apps/data-extractor
+    image: bsuir-hrm-dataanlyzer-data-extractor
+    ports:
+      - "8080:8080"
+    depends_on:
+      - service-discovery
+    restart: always
