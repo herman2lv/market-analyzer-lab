@@ -1,0 +1,12 @@
+spring:
+  application:
+    name: service-gateway
+logging:
+  level:
+    com:
+      bsuir:
+        hrm: trace
+eureka:
+  client:
+    service-url:
+      defaultZone: http://service-discovery:8761/eureka
