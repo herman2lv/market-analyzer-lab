@@ -48,3 +48,15 @@ services:
       - service-discovery
       - service-product
     restart: always
+
+  service-desktop:
+    build: apps/service-desktop
+    image: bsuir-hrm-dataanlyzer-service-desktop
+    ports:
+      - "8083:8080"
+      - "5555"
+    environment:
+      - JAVA_TOOL_OPTIONS=${DEBUG_OPTIONS}
+    depends_on:
+      - service-discovery
+    restart: always
