@@ -60,3 +60,18 @@ services:
     depends_on:
       - service-discovery
     restart: always
+
+  service-gateway:
+    build: apps/service-gateway
+    image: bsuir-hrm-dataanlyzer-service-gateway
+    ports:
+      - "8084:8080"
+      - "5555"
+    environment:
+      - JAVA_TOOL_OPTIONS=${DEBUG_OPTIONS}
+    depends_on:
+      - service-discovery
+      - service-product
+      - service-desktop
+      - service-processing
+    restart: always
