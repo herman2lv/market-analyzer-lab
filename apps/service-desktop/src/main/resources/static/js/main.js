@@ -1,6 +1,6 @@
 import {getChartBuilder} from "./chart-bulder.js";
 
-$.get("http://localhost:8081/api/v1/categories", processCategories);
+$.get("/api/v1/categories", processCategories);
 
 const $toggleButton = $('.toggle-button')
 const $chartButton = $('.display-chart-button')
@@ -39,7 +39,7 @@ $chartButton.on('click', (e) => {
   const chartProperties = createChartProperties()
   $.ajax({
     type: 'POST',
-    url: 'http://localhost:8082/api/v1/data',
+    url: '/api/v1/data',
     data: JSON.stringify(chartProperties),
     dataType: 'json',
     contentType: 'application/json',

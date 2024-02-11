@@ -1,12 +1,12 @@
 package com.bsuir.hrm.dataanalyzer.web
 
-import org.springframework.stereotype.Repository
+import org.springframework.stereotype.Controller
 import org.springframework.web.bind.annotation.GetMapping
 
-@Repository
+@Controller
 class HomeController {
 
-    @GetMapping("/")
+    @GetMapping("/home")
     fun home(): String = "index"
 
 }
