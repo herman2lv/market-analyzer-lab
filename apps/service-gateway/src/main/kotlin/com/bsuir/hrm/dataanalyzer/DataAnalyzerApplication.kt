@@ -26,6 +26,11 @@ class DataAnalyzerApplication {
             }
             .route { p: PredicateSpec ->
                 p
+                    .path("/tenant/**")
+                    .uri("lb://service-tenant")
+            }
+            .route { p: PredicateSpec ->
+                p
                     .path("/**")
                     .uri("lb://service-desktop")
             }
