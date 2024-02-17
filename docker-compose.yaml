@@ -75,3 +75,16 @@ services:
       - service-desktop
       - service-processing
     restart: always
+
+  service-tenant:
+    build: apps/service-tenant
+    image: bsuir-hrm-dataanlyzer-service-tenant
+    expose:
+      - "8080"
+    ports:
+      - "5555"
+    environment:
+      - JAVA_TOOL_OPTIONS=${DEBUG_OPTIONS}
+    depends_on:
+      - service-discovery
+    restart: always
