@@ -17,33 +17,17 @@ logging:
     com:
       bsuir:
         hrm: trace
----
-spring:
-  config:
-    activate:
-      on-profile: test
-logging:
-  level:
-    com:
-      bsuir:
-        hrm: trace
----
-spring:
-  config:
-    activate:
-      on-profile: dev
-logging:
-  level:
-    com:
-      bsuir:
-        hrm: debug
----
-spring:
-  config:
-    activate:
-      on-profile: prod
-logging:
-  level:
-    com:
-      bsuir:
-        hrm: warn
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  prometheus:
+    metrics:
+      export:
+        enabled: true

@@ -88,3 +88,20 @@ services:
     depends_on:
       - service-discovery
     restart: always
+
+  grafana:
+    image: grafana/grafana:10.2.2
+    ports:
+      - "3000:3000"
+    volumes:
+      - "grafana:/var/lib/grafana"
+
+  prometheus:
+    image: prom/prometheus:v2.48.0
+    ports:
+      - "9090:9090"
+    volumes:
+      - "./config/prometheus.yaml:/etc/prometheus/prometheus.yml" # target file must be .yml not .yaml
+
+volumes:
+  grafana:

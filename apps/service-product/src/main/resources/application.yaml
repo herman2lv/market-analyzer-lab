@@ -23,6 +23,20 @@ logging:
     com:
       bsuir:
         hrm: trace
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  prometheus:
+    metrics:
+      export:
+        enabled: true
 ---
 spring:
   config:

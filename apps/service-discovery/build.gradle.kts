@@ -28,6 +28,8 @@ extra["springCloudVersion"] = "2023.0.0"
 dependencies {
 	implementation("org.jetbrains.kotlin:kotlin-reflect")
 	implementation("org.springframework.cloud:spring-cloud-starter-netflix-eureka-server")
+	implementation("org.springframework.boot:spring-boot-starter-actuator")
+	implementation("io.micrometer:micrometer-registry-prometheus:1.12.0")
 	testImplementation("org.springframework.boot:spring-boot-starter-test")
 }
 

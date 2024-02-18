@@ -4,3 +4,17 @@ eureka:
   client:
     register-with-eureka: false
     fetch-registry: false
+management:
+  endpoint:
+    prometheus:
+      enabled: true
+    metrics:
+      enabled: true
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  prometheus:
+    metrics:
+      export:
+        enabled: true
