@@ -6,12 +6,7 @@ about prices of different categories of tech products
 
 User could define both period and categories of products to be analyzed
 
-To run project environment should be configured with 
-`spring.profiles.active` to be set `"app"` and any of `"test"`/`"dev"`/`"prod"`
-For example, set environment variable `spring.profiles.active=app,dev`
-
-For profiles `"dev"`/`"prod"` database must be available.
-
-For `"prod"` profile DB connection credentials should be externalized to environment variables
-
-Expected database connection configuration is at [`application.yaml`](/apps/legacy/src/main/resources/application.yaml)
+Application require docker installed. To run application build it locally with 
+`./gradlew bootJar`
+and start
+`docker compose up`
